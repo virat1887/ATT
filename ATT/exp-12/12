@@ -1,0 +1,45 @@
+package CSE;
+import java.util.Iterator;
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import java.util.Set;
+public class Demo {
+public static void main(String[] args) throws InterruptedException, AWTException {
+WebDriver driver= new ChromeDriver();
+driver.get("https://smallpdf.com/word-to-pdf");
+Thread.sleep(2000);
+WebElement chooseFileBtn = driver.findElement(By.xpath("(//span[normalize-space()='Choose Files'])[1]"));
+chooseFileBtn.click();
+Thread.sleep(2000);
+Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+StringSelection str = new StringSelection("Downloads\\Selenium ATT Programms (12) (1)");
+clipboard.setContents(str,null);
+Thread.sleep(2000);
+Robot robot = new Robot();
+robot.keyPress(KeyEvent.VK_CONTROL);
+robot.keyPress(KeyEvent.VK_V);
+robot.keyPress(KeyEvent.VK_ENTER);
+Thread.sleep(10000);
+Set<String>parentWindow=driver.getWindowHandles();
+Iterator iterator=parentWindow.iterator();
+while(iterator.hasNext())
+{
+	String childWindow=(String)iterator.next();
+	if(!parentWindow.equals(childWindow))
+	{
+		driver.switchTo().window(childWindow);
+	}
+}
+WebElement download = driver.findElement(By.xpath("//*[@id=\"app\"]/div/div/div[3]/div[2]/div[2]/div/div/div[2]/div/div[2]/div[2]/div[1]/div/button[1]/div"));
+download.click();
+}
+}
+
