@@ -1,0 +1,37 @@
+package CSE;
+
+import java.util.Iterator;
+import java.util.Set;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+public class Week6 {
+	public static void main(String[] args) throws InterruptedException {
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://www.ajio.com/");
+		Thread.sleep(2000);
+		WebElement ajioLink=driver.findElement(By.xpath("//*[@id=\"loginAjio\"]"));
+		ajioLink.click();
+		Thread.sleep(2000);
+		WebElement facebookBtn=driver.findElement(By.xpath("//*[@id=\"login-modal\"]/div/div/div[2]/div/form/div[1]/div[1]/div[1]/div/span[2]"));
+		facebookBtn.click();
+		Thread.sleep(2000);
+		Set<String>parentWindow=driver.getWindowHandles();
+		Iterator iterator=parentWindow.iterator();
+		while(iterator.hasNext())
+		{
+			String childWindow=(String)iterator.next();
+			if(!parentWindow.equals(childWindow))
+			{
+				driver.switchTo().window(childWindow);
+			}
+		}
+		WebElement emailorMobileNo=driver.findElement(By.xpath("//*[@id=\"email\"]"));
+		emailorMobileNo.sendKeys("bhumi27@gmail.com");
+		WebElement pwd=driver.findElement(By.xpath("//*[@id=\"pass\"]"));
+		pwd.sendKeys("@123");
+		WebElement loginBtn=driver.findElement(By.xpath("//*[@id=\"loginbutton\"]"));
+		loginBtn.click();
+	}
+}

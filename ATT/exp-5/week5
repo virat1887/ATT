@@ -1,0 +1,23 @@
+package CSE;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+public class Week5 {
+	public static void main(String[] args) throws InterruptedException{
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://cmrithyderabad.edu.in/");
+		Thread.sleep(1000);
+		WebElement Examination = driver.findElement(By.partialLinkText("EXAMINATION"));
+		Examination.click();
+		WebElement results = driver.findElement(By.partialLinkText("Results"));
+		results.click();
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id=\"btech\"]")).click();
+		driver.findElement(By.xpath("//*[@id=\"R22\"]")).click();
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id=\"resultList\"]/a[7]")).click();
+		driver.findElement(By.xpath("//*[@id=\"resultGetForm\"]/input")).sendKeys("23R01A0578");
+	}
+}
